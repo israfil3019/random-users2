@@ -14,17 +14,23 @@ import loadingGif from "../assets/loading.gif";
 
 const Card = () => {
   const [randomUser, setRandomUser] = useState();
+  const [information, setInformation] = useState();
 
   const fetchData = () => {
     axios.get("https://randomuser.me/api/").then((res) => {
-      //   console.log(res);
+      console.log(res);
       setRandomUser(res.data.results[0]);
     });
+  };
+
+  const handleClick = (information) => {
+    setInformation(information);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div>
       <div className="container">
@@ -32,29 +38,69 @@ const Card = () => {
         <div className="card-container">
           <div className="card-header">
             {/* <div><img src={loadingGif} alt="loading" /></div> */}
-            <div className="profil-photo">
-              <img src="" alt="profil" />
+            <div className="profile-photo">
+              <img src={randomUser?.picture?.large} alt="profil" />
             </div>
-            <div className="profil-info">my name is</div>
+            <div className="profile-info">
+              <h4>My {} is</h4>
+              <h4>
+                {information?.map((randomUser, index) => (
+                  <span key={index}>{randomUser + " "} </span>
+                ))}
+              </h4>
+            </div>
           </div>
           <div className="logos">
             <button>
-              <img src={woman} alt="man-woman" />
+              <img
+                src={randomUser?.gender === "male" ? man : woman}
+                alt="man-woman"
+                onClick={() =>
+                  handleClick([randomUser?.name?.first, randomUser?.name?.last])
+                }
+              />
             </button>
             <button>
-              <img src={email} alt="email" />
+              <img
+                src={email}
+                alt="email"
+                onClick={() => handleClick([randomUser?.email])}
+              />
             </button>
             <button>
-              <img src={growingMan} alt="age" />
+              <img
+                src={
+                  randomUser?.gender === "female" ? growingWoman : growingMan
+                }
+                alt="age"
+                onClick={() => handleClick([randomUser?.dob?.age])}
+              />
             </button>
             <button>
-              <img src={location} alt="map" />
+              <img
+                src={location}
+                alt="map"
+                onClick={() =>
+                  handleClick([
+                    randomUser?.location?.city,
+                    randomUser?.location?.country,
+                  ])
+                }
+              />
             </button>
             <button>
-              <img src={phone} alt="telephone" />
+              <img
+                src={phone}
+                alt="telephone"
+                onClick={() => handleClick([randomUser?.cell])}
+              />
             </button>
             <button>
-              <img src={password} alt="padlock" />
+              <img
+                src={password}
+                alt="padlock"
+                onClick={() => handleClick([randomUser?.login?.password])}
+              />
             </button>
           </div>
           <div className="buttons">

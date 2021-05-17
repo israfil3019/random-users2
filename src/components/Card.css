@@ -12,3 +12,8 @@
   width: 3rem;
   margin-top: 2rem;
 }
+
+.profile-photo img {
+  border: 1px solid burlywood;
+  border-radius: 50%;
+}
