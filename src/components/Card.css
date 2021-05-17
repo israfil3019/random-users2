@@ -4,3 +4,11 @@
   justify-content: center;
   align-items: center;
 }
+.logos img {
+  width: 2rem;
+}
+
+.footer img {
+  width: 3rem;
+  margin-top: 2rem;
+}
