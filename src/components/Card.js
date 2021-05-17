@@ -22,7 +22,6 @@ const Card = () => {
   const fetchData = () => {
     setLoading(true);
     axios.get("https://randomuser.me/api/").then((res) => {
-      //   console.log(res);
       setRandomUser(res.data.results[0]);
       setInformation([
         res.data.results[0].name.first,
@@ -33,17 +32,21 @@ const Card = () => {
   };
 
   const addUser = () => {
-    setUserList([
-      ...userList,
-      {
-        name: randomUser?.name?.first,
-        email: randomUser?.email,
-        phone: randomUser?.phone,
-        age: randomUser?.dob?.age,
-      },
-    ]);
+    if (
+      userList.filter((user) => user.email === randomUser?.email).length > 0
+    ) {
+    } else {
+      setUserList([
+        ...userList,
+        {
+          name: randomUser?.name?.first,
+          email: randomUser?.email,
+          phone: randomUser?.phone,
+          age: randomUser?.dob?.age,
+        },
+      ]);
+    }
   };
-
   const handleClick = (information, personel) => {
     setInformation(information);
     setPersonel(personel);
@@ -140,7 +143,7 @@ const Card = () => {
             <button onClick={addUser}>Add User</button>
           </div>
           <div className="addUser-container">
-            {userList && (
+            {userList.length > 0 && (
               <table>
                 <thead>
                   <tr>
@@ -168,6 +171,7 @@ const Card = () => {
         </div>
         <div className="footer">
           <img src={design} alt="design" />
+          <strong>MY Way</strong>
         </div>
       </div>
     </div>

@@ -10,7 +10,6 @@
 
 .footer img {
   width: 3rem;
-  margin-top: 2rem;
 }
 
 .profile-photo img {
@@ -30,4 +29,10 @@
 }
 .profile-info {
   height: 20vh;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
 }
