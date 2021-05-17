@@ -15,23 +15,25 @@ import loadingGif from "../assets/loading.gif";
 const Card = () => {
   const [randomUser, setRandomUser] = useState();
   const [information, setInformation] = useState();
+  const [personel, setPersonel] = useState("name");
+  const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
-    axios
-      .get("https://randomuser.me/api/")
-      .then((res) => {
-        //   console.log(res);
-        setRandomUser(res.data.results[0]);
-        setInformation([
-          res.data.results[0].name.first,
-          res.data.results[0].name?.last,
-        ]);
-      })
-      .then(() => {});
+    setLoading(true);
+    axios.get("https://randomuser.me/api/").then((res) => {
+      //   console.log(res);
+      setRandomUser(res.data.results[0]);
+      setInformation([
+        res.data.results[0].name.first,
+        res.data.results[0].name?.last,
+      ]);
+    });
+    setLoading(false);
   };
 
-  const handleClick = (information) => {
+  const handleClick = (information, personel) => {
     setInformation(information);
+    setPersonel(personel);
   };
 
   useEffect(() => {
@@ -44,18 +46,23 @@ const Card = () => {
         <div className="header">Dummy users profile info</div>
         <div className="card-container">
           <div className="card-header">
-            {/* <div><img src={loadingGif} alt="loading" /></div> */}
-            <div className="profile-photo">
-              <img src={randomUser?.picture?.large} alt="profil" />
-            </div>
-            <div className="profile-info">
-              <h4 className="profile-info-header">My {} is</h4>
-              <h4 className="profile-info-info">
-                {information?.map((randomUser, index) => (
-                  <span key={index}>{randomUser + " "} </span>
-                ))}
-              </h4>
-            </div>
+            {loading ? (
+              <img src={loadingGif} alt="loading" className="loading" />
+            ) : (
+              <div>
+                <div className="profile-photo">
+                  <img src={randomUser?.picture?.large} alt="profil" />
+                </div>
+                <div className="profile-info">
+                  <h4 className="profile-info-header">My {personel} is</h4>
+                  <h4 className="profile-info-info">
+                    {information?.map((randomUser, index) => (
+                      <span key={index}>{randomUser + " "} </span>
+                    ))}
+                  </h4>
+                </div>
+              </div>
+            )}
           </div>
           <div className="logos">
             <button>
@@ -63,7 +70,10 @@ const Card = () => {
                 src={randomUser?.gender === "male" ? man : woman}
                 alt="man-woman"
                 onClick={() =>
-                  handleClick([randomUser?.name?.first, randomUser?.name?.last])
+                  handleClick(
+                    [randomUser?.name?.first, randomUser?.name?.last],
+                    "name"
+                  )
                 }
               />
             </button>
@@ -71,7 +81,7 @@ const Card = () => {
               <img
                 src={email}
                 alt="email"
-                onClick={() => handleClick([randomUser?.email])}
+                onClick={() => handleClick([randomUser?.email], "email")}
               />
             </button>
             <button>
@@ -80,7 +90,7 @@ const Card = () => {
                   randomUser?.gender === "female" ? growingWoman : growingMan
                 }
                 alt="age"
-                onClick={() => handleClick([randomUser?.dob?.age])}
+                onClick={() => handleClick([randomUser?.dob?.age], "age")}
               />
             </button>
             <button>
@@ -88,10 +98,10 @@ const Card = () => {
                 src={location}
                 alt="map"
                 onClick={() =>
-                  handleClick([
-                    randomUser?.location?.city,
-                    randomUser?.location?.country,
-                  ])
+                  handleClick(
+                    [randomUser?.location?.city, randomUser?.location?.country],
+                    "address"
+                  )
                 }
               />
             </button>
@@ -99,14 +109,16 @@ const Card = () => {
               <img
                 src={phone}
                 alt="telephone"
-                onClick={() => handleClick([randomUser?.cell])}
+                onClick={() => handleClick([randomUser?.cell], "number")}
               />
             </button>
             <button>
               <img
                 src={password}
                 alt="padlock"
-                onClick={() => handleClick([randomUser?.login?.password])}
+                onClick={() =>
+                  handleClick([randomUser?.login?.password], "password")
+                }
               />
             </button>
           </div>
