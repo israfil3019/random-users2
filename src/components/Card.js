@@ -35,6 +35,7 @@ const Card = () => {
     if (
       userList.filter((user) => user.email === randomUser?.email).length > 0
     ) {
+      alert("You have already add this user!");
     } else {
       setUserList([
         ...userList,
