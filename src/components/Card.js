@@ -17,6 +17,7 @@ const Card = () => {
   const [information, setInformation] = useState();
   const [personel, setPersonel] = useState("name");
   const [loading, setLoading] = useState(false);
+  const [userList, setUserList] = useState([]);
 
   const fetchData = () => {
     setLoading(true);
@@ -27,8 +28,20 @@ const Card = () => {
         res.data.results[0].name.first,
         res.data.results[0].name?.last,
       ]);
+      setLoading(false);
     });
-    setLoading(false);
+  };
+
+  const addUser = () => {
+    setUserList([
+      ...userList,
+      {
+        name: randomUser?.name?.first,
+        email: randomUser?.email,
+        phone: randomUser?.phone,
+        age: randomUser?.dob?.age,
+      },
+    ]);
   };
 
   const handleClick = (information, personel) => {
@@ -109,7 +122,7 @@ const Card = () => {
               <img
                 src={phone}
                 alt="telephone"
-                onClick={() => handleClick([randomUser?.cell], "number")}
+                onClick={() => handleClick([randomUser?.phone], "number")}
               />
             </button>
             <button>
@@ -124,9 +137,34 @@ const Card = () => {
           </div>
           <div className="buttons">
             <button onClick={fetchData}>New User</button>
-            <button>Add User</button>
+            <button onClick={addUser}>Add User</button>
           </div>
-          <div className="addUser-container"></div>
+          <div className="addUser-container">
+            {userList && (
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Age</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userList?.map((user, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>{user.phone}</td>
+                      <td>{user.age}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
         <div className="footer">
           <img src={design} alt="design" />
