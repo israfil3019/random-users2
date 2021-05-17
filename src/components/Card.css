@@ -17,3 +17,17 @@
   border: 1px solid burlywood;
   border-radius: 50%;
 }
+
+.profile-info-info {
+  height: 2vh;
+}
+.card-header {
+  margin: 1rem auto;
+  height: 40vh;
+}
+.profile-photo {
+  height: 20vh;
+}
+.profile-info {
+  height: 20vh;
+}

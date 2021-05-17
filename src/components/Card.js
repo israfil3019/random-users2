@@ -17,10 +17,17 @@ const Card = () => {
   const [information, setInformation] = useState();
 
   const fetchData = () => {
-    axios.get("https://randomuser.me/api/").then((res) => {
-      console.log(res);
-      setRandomUser(res.data.results[0]);
-    });
+    axios
+      .get("https://randomuser.me/api/")
+      .then((res) => {
+        //   console.log(res);
+        setRandomUser(res.data.results[0]);
+        setInformation([
+          res.data.results[0].name.first,
+          res.data.results[0].name?.last,
+        ]);
+      })
+      .then(() => {});
   };
 
   const handleClick = (information) => {
@@ -42,8 +49,8 @@ const Card = () => {
               <img src={randomUser?.picture?.large} alt="profil" />
             </div>
             <div className="profile-info">
-              <h4>My {} is</h4>
-              <h4>
+              <h4 className="profile-info-header">My {} is</h4>
+              <h4 className="profile-info-info">
                 {information?.map((randomUser, index) => (
                   <span key={index}>{randomUser + " "} </span>
                 ))}
@@ -104,7 +111,7 @@ const Card = () => {
             </button>
           </div>
           <div className="buttons">
-            <button>New User</button>
+            <button onClick={fetchData}>New User</button>
             <button>Add User</button>
           </div>
           <div className="addUser-container"></div>
