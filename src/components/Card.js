@@ -27,6 +27,7 @@ const Card = () => {
         res.data.results[0].name.first,
         res.data.results[0].name?.last,
       ]);
+      setPersonel("name");
       setLoading(false);
     });
   };
@@ -82,7 +83,7 @@ const Card = () => {
             )}
           </div>
           <div className="logos">
-            <button>
+            <button className="logo">
               <img
                 src={randomUser?.gender === "male" ? man : woman}
                 alt="man-woman"
@@ -94,14 +95,14 @@ const Card = () => {
                 }
               />
             </button>
-            <button>
+            <button className="logo">
               <img
                 src={email}
                 alt="email"
                 onClick={() => handleClick([randomUser?.email], "email")}
               />
             </button>
-            <button>
+            <button className="logo">
               <img
                 src={
                   randomUser?.gender === "female" ? growingWoman : growingMan
@@ -110,7 +111,7 @@ const Card = () => {
                 onClick={() => handleClick([randomUser?.dob?.age], "age")}
               />
             </button>
-            <button>
+            <button className="logo">
               <img
                 src={location}
                 alt="map"
@@ -122,14 +123,14 @@ const Card = () => {
                 }
               />
             </button>
-            <button>
+            <button className="logo">
               <img
                 src={phone}
                 alt="telephone"
                 onClick={() => handleClick([randomUser?.phone], "number")}
               />
             </button>
-            <button>
+            <button className="logo">
               <img
                 src={password}
                 alt="padlock"
@@ -140,8 +141,12 @@ const Card = () => {
             </button>
           </div>
           <div className="buttons">
-            <button onClick={fetchData}>New User</button>
-            <button onClick={addUser}>Add User</button>
+            <button className="button" onClick={fetchData}>
+              New User
+            </button>
+            <button className="button" onClick={addUser}>
+              Add User
+            </button>
           </div>
           <div className="addUser-container">
             {userList.length > 0 && (
@@ -149,7 +154,7 @@ const Card = () => {
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>First Name</th>
+                    <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Age</th>
@@ -173,6 +178,7 @@ const Card = () => {
         <div className="footer">
           <img src={design} alt="design" />
           <strong>MY Way</strong>
+          <img src={design} alt="design" />
         </div>
       </div>
     </div>
